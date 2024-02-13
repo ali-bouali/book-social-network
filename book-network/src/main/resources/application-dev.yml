@@ -1,0 +1,52 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/the_academy
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: localhost
+    port: 1025
+    username: ali
+    password: ali
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+#  flyway:
+#    baseline-on-migrate: true
+#    # user:
+#    # password:
+#    baseline-description: "init"
+#    baseline-version: 1
+#    enabled: true
+#    locations:
+#      - classpath:db/migration
+#      - classpath:db/migration/dev-only
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account?token=%s
+server:
+  port: 8088
