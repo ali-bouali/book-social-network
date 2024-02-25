@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Welcome to the Academy</h2>
+    <p class="greeting" th:text="'Hello ' + ${username} + ','"></p>
+    <p>Welcome to the academy. Please activate your account by clicking on this button</p>
+    <p>This email is valid only for 15 minutes</p>
+    <a th:href="${confirmationUrl}" target="_blank">Activate your account</a>
+</body>
+</html>
