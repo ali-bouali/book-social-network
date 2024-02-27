@@ -7,12 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.alibou.book.handler.BusinessErrorCodes.ACCOUNT_DISABLED;
 import static com.alibou.book.handler.BusinessErrorCodes.ACCOUNT_LOCKED;
@@ -99,19 +99,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exp) {
-        var errors = new HashMap<String, String>();
+        Set<String> errors = new HashSet<>();
         exp.getBindingResult().getAllErrors()
                 .forEach(error -> {
-                    var fieldName = ((FieldError) error).getField();
+                    //var fieldName = ((FieldError) error).getField();
                     var errorMessage = error.getDefaultMessage();
-                    errors.put(fieldName, errorMessage);
+                    errors.add(errorMessage);
                 });
 
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body(
                         ExceptionResponse.builder()
-                                .errors(errors)
+                                .validationErrors(errors)
                                 .build()
                 );
     }

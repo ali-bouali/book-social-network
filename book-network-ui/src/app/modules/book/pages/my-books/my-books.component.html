@@ -1,0 +1,78 @@
+<h3>My books list</h3>
+<hr>
+<div class="d-flex justify-content-end mb-3">
+  <a routerLink="/books/manage" class="btn btn-outline-primary">
+    <i class="fas fa-plus"></i>&nbsp;New book
+  </a>
+</div>
+<div class="d-flex justify-content-start gap-4 flex-wrap">
+  <app-book-card
+    *ngFor="let book of bookResponse.content"
+    [book]="book"
+    [manage]="true"
+    (archive)="archiveBook($event)"
+    (share)="shareBook($event)"
+    (edit)="editBook($event)"
+  ></app-book-card>
+</div>
+<div class="d-flex justify-content-center mt-3">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <a
+          (click)="goToFirstPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Previous"
+          [class.disabled]="page === 0"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a
+          (click)="goToPreviousPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Previous"
+          [class.disabled]="page === 0"
+        >
+          <i class="fa-solid fa-angle-left"></i>
+        </a>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let pageIndex of pages"
+      >
+        <a
+          (click)="gotToPage(pageIndex)"
+          class="page-link"
+          [class.active]="page === pageIndex"
+          href="javascript:void(0)"
+        >{{ pageIndex + 1 }}</a>
+      </li>
+      <li class="page-item">
+        <a
+          (click)="goToNextPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Next"
+          [class.disabled]="isLastPage"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a
+          (click)="goToLastPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Next"
+          [class.disabled]="isLastPage"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

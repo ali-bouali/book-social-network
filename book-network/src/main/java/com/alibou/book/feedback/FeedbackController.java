@@ -1,6 +1,7 @@
 package com.alibou.book.feedback;
 
 import com.alibou.book.common.PageResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("feedbacks")
 @RequiredArgsConstructor
+@Tag(name = "Feedback")
 public class FeedbackController {
 
     private final FeedbackService service;
 
     @PostMapping
-    public ResponseEntity<Integer> save(
+    public ResponseEntity<Integer> saveFeedback(
             @Valid @RequestBody FeedbackRequest request,
             Authentication connectedUser
     ) {

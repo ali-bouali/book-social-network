@@ -18,6 +18,10 @@ public class BookResponse {
     private String authorName;
     private String isbn;
     private String synopsis;
-    private String cover;
+    private String owner;
+    private byte[] cover;
     private double rate;
+    private boolean archived;
+    private boolean shareable;
+
 }

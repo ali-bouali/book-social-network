@@ -1,0 +1,93 @@
+<div class="p-2">
+  <hr>
+  <div class="d-flex gap-2">
+    <div class="col-3">
+      <img class="rounded-1" width="100%" height="100%" [src]=" 'data:image/jpg;base64,' + book.cover || 'https://source.unsplash.com/user/c_v_r/1900x800'" alt="">
+    </div>
+    <div class="col-9">
+      <h2><i class="fa-solid fa-book"></i>&nbsp;{{ book.title }}</h2>
+      <h4><i class="fa-solid fa-user-check"></i>&nbsp;{{ book.authorName }}</h4>
+      <h5><i class="fas fa-code"></i>&nbsp;{{ book.isbn }}</h5>
+      <h6 class="card-subtitle fs-6 text-secondary"><i class="fas fa-user"></i>&nbsp;{{ book.owner }}</h6>
+      <div class="d-flex gap-2">
+        <app-rating [rating]="book.rate || 0"></app-rating>
+        <span>{{ book.rate }}</span>
+        ({{feedbacks?.totalElements || 0}} feedbacks)
+      </div>
+      <hr>
+      <p>
+        {{ book.synopsis }}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="d-flex flex-column justify-content-end">
+  <div *ngFor="let feedback of feedbacks.content">
+    <div class="d-flex gap-2">
+      <app-rating [rating]="feedback.note || 0"></app-rating>
+      <strong>{{feedback.note}}</strong>
+    </div>
+    <p>{{feedback.comment}}</p>
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-3">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <a
+          (click)="goToFirstPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Previous"
+          [class.disabled]="page === 0"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a
+          (click)="goToPreviousPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Previous"
+          [class.disabled]="page === 0"
+        >
+          <i class="fa-solid fa-angle-left"></i>
+        </a>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let pageIndex of pages"
+      >
+        <a
+          (click)="gotToPage(pageIndex)"
+          class="page-link"
+          [class.active]="page === pageIndex"
+          href="javascript:void(0)"
+        >{{ pageIndex + 1 }}</a>
+      </li>
+      <li class="page-item">
+        <a
+          (click)="goToNextPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Next"
+          [class.disabled]="isLastPage"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a
+          (click)="goToLastPage()"
+          class="page-link"
+          href="javascript:void(0)"
+          aria-label="Next"
+          [class.disabled]="isLastPage"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
