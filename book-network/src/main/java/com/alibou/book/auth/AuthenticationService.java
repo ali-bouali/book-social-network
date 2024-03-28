@@ -18,10 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -94,7 +94,7 @@ public class AuthenticationService {
 
     private String generateAndSaveActivationToken(User user) {
         // Generate a token
-        String generatedToken = UUID.randomUUID().toString();
+        String generatedToken = generateActivationCode(6);
         var token = Token.builder()
                 .token(generatedToken)
                 .createdAt(LocalDateTime.now())
@@ -102,6 +102,7 @@ public class AuthenticationService {
                 .user(user)
                 .build();
         tokenRepository.save(token);
+
         return generatedToken;
     }
 
@@ -112,8 +113,23 @@ public class AuthenticationService {
                 user.getEmail(),
                 user.getFullName(),
                 EmailTemplateName.ACTIVATE_ACCOUNT,
-                String.format(activationUrl, newToken),
+                activationUrl,
+                newToken,
                 "Account activation"
                 );
+    }
+
+    private String generateActivationCode(int length) {
+        String characters = "0123456789";
+        StringBuilder codeBuilder = new StringBuilder();
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = secureRandom.nextInt(characters.length());
+            codeBuilder.append(characters.charAt(randomIndex));
+        }
+
+        return codeBuilder.toString();
     }
 }

@@ -32,9 +32,12 @@
           </a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Find a book" aria-label="Search">
+      <form class="d-flex gap-2 align-items-center" role="search">
+        <input class="form-control" type="search" placeholder="Find a book" aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+        <span>Welcome</span>
+        <span class="text-capitalize fw-bold">alibou</span>
+        <button class="btn btn-link" type="submit" (click)="logout()"><i class="fas fa-door-open"></i></button>
       </form>
     </div>
   </div>
