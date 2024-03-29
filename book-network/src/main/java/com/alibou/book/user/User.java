@@ -38,9 +38,9 @@ import static jakarta.persistence.FetchType.EAGER;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "_user")
-@EntityListeners(AuditingEntityListener.class)
+// @Entity
+// @Table(name = "_user")
+// @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
     @Id

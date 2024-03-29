@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
+    /*private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -51,7 +51,7 @@ public class AuthenticationService {
                 .enabled(false)
                 .roles(List.of(userRole))
                 .build();
-        userRepository.save(user);
+        //userRepository.save(user);
         sendValidationEmail(user);
     }
 
@@ -131,5 +131,5 @@ public class AuthenticationService {
         }
 
         return codeBuilder.toString();
-    }
+    }*/
 }

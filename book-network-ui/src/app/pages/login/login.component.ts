@@ -1,27 +1,28 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthenticationService} from '../../services/services/authentication.service';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationRequest} from '../../services/models/authentication-request';
-import {TokenService} from '../../services/token/token.service';
+import {KeycloakService} from '../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   authRequest: AuthenticationRequest = {email: '', password: ''};
   errorMsg: Array<string> = [];
 
   constructor(
-    private router: Router,
-    private authService: AuthenticationService,
-    private tokenService: TokenService
+    private ss: KeycloakService
   ) {
   }
 
-  login() {
+  async ngOnInit(): Promise<void> {
+    await this.ss.init();
+    await this.ss.login();
+  }
+
+  /*login() {
     this.errorMsg = [];
     this.authService.authenticate({
       body: this.authRequest
@@ -43,5 +44,5 @@ export class LoginComponent {
 
   register() {
     this.router.navigate(['register']);
-  }
+  }*/
 }

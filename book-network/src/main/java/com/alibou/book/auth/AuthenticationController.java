@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication")
 public class AuthenticationController {
 
-    private final AuthenticationService service;
+    /*private final AuthenticationService service;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -42,7 +42,7 @@ public class AuthenticationController {
             @RequestParam String token
     ) throws MessagingException {
         service.activateAccount(token);
-    }
+    }*/
 
 
 }

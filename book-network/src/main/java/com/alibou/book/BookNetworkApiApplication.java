@@ -18,12 +18,12 @@ public class BookNetworkApiApplication {
 		SpringApplication.run(BookNetworkApiApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner runner(RoleRepository roleRepository) {
+	//@Bean
+	/*public CommandLineRunner runner(RoleRepository roleRepository) {
 		return args -> {
 			if (roleRepository.findByName("USER").isEmpty()) {
 				roleRepository.save(Role.builder().name("USER").build());
 			}
 		};
-	}
+	}*/
 }

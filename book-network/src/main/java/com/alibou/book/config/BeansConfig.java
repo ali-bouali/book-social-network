@@ -23,9 +23,9 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class BeansConfig {
 
-    private final UserDetailsService userDetailsService;
+    // private final UserDetailsService userDetailsService;
 
-    @Bean
+    /*@Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
@@ -41,10 +41,10 @@ public class BeansConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
     @Bean
-    public AuditorAware<Integer> auditorAware() {
+    public AuditorAware<String> auditorAware() {
         return new ApplicationAuditAware();
     }
 
