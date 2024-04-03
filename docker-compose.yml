@@ -20,6 +20,25 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
+  bsn-api:
+    container_name: bsn-api
+    image: bsn/bsn:1.0.8
+    ports:
+      - 8088:8088
+    networks:
+      - spring-demo
+    depends_on:
+      - postgres
+
+  bsn-ui:
+    container_name: bsn-ui
+    image: bsn/bsn-ui:1.0.0
+    ports:
+      - 8080:80
+    networks:
+      - spring-demo
+    depends_on:
+      - bsn-api
 networks:
   spring-demo:
     driver: bridge
