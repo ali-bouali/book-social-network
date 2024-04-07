@@ -8,6 +8,7 @@ on:
       - book-network-ui/**
       - docker/frontend/**
       - 'docker-compose.yml'
+      - .github/workflows/*-frontend.yml
 jobs:
   build-image:
     name: Build FE Docker image
@@ -25,7 +26,7 @@ jobs:
           context: book-network-ui
           file: docker/frontend/Dockerfile
           push: true
-          platform: linux/amd64
+          platforms: linux/amd64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest
 
   deploy:
