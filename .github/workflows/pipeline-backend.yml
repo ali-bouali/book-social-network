@@ -71,25 +71,26 @@ jobs:
     needs: [build]
     steps:
       - name: Extract project version
-        id: extract-version
+        id: extract_version
         run: |
           cd book-network
-          echo "PROJECT_VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec) >> $GITHUB_OUTPUT"
-          echo "Project version:: ${{ steps.extract-version.outputs.PROJECT_VERSION }}"
+          echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec) >> $GITHUB_OUTPUT"
+          echo "Project version:: ${{ steps.extract_version.outputs.VERSION }}"
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build & Push to DockerHub
         uses: docker/build-push-action@v5
         with:
           context: book-network
-          dockerfile: docker/backend/Dockerfile
+          file: docker/backend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn:${{ steps.extract-version.outputs.PROJECT_VERSION }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn:${{ steps.extract_version.outputs.VERSION }}
           build-args: |
             PROFILE: dev
-            APP_VERSION: ${{ steps.extract-version.outputs.PROJECT_VERSION }}
+            APP_VERSION: ${{ steps.extract_version.outputs.VERSION }}
   
