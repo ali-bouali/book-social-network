@@ -1,0 +1,95 @@
+name: BSN Backend API Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - ci/pipeline
+    paths:
+      - book-network
+
+jobs:
+  compile:
+    runs-on: self-hosted
+    name: Compile project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Running Unit Tests
+        run: |
+          cd book-network
+          mvn clean compile
+  unit-tests:
+    runs-on: self-hosted
+    name: Unit tests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Running Unit Tests
+        run: |
+          cd book-network
+          mvn clean test
+  build:
+    runs-on: self-hosted
+    name: Build backend
+    needs: [compile, unit-tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Compile project
+        run: |
+          cd book-network
+          mvn clean compile
+
+  build-image:
+    name: Build Docker image
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+      - name: Extract project version
+        id: extract-version
+        run: echo "::set-output name=PROJECT_VERSION::$(mvn -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)"
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: book-network
+          dockerfile: docker/backend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn:${{ steps.extract-version.outputs.PROJECT_VERSION }}
+          args: |
+            PROFILE: dev
+            APP_VERSION: ${{ steps.extract-version.outputs.PROJECT_VERSION }}
+  
