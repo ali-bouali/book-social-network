@@ -124,3 +124,13 @@ jobs:
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
           EOF
+  health-check:
+    name: API Health Check
+    runs-on: self-hosted
+    steps:
+      - name: Check the docker container health status
+        run: |
+          if ! docker ps -a | grep bsn-api; then
+            echo "Container is not running"
+            exit 1
+          fi
