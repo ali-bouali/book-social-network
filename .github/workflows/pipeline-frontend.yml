@@ -24,7 +24,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest
 
   deploy:
-    name: Deploy Backend
+    name: Deploy Frontend
     runs-on: self-hosted
     needs: [ build-image ]
     steps:
