@@ -74,7 +74,7 @@ jobs:
         id: extract-version
         run: |
           cd book-network
-          echo "::set-output name=PROJECT_VERSION::$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)"
+          echo "PROJECT_VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec) >> $GITHUB_OUTPUT"
           echo "Project version:: ${{ steps.extract-version.outputs.PROJECT_VERSION }}"
 
       - name: Login to DockerHub
