@@ -54,6 +54,7 @@ jobs:
   health-check:
     name: UI Health Check
     runs-on: self-hosted
+    needs: [deploy]
     steps:
       - name: Check the docker container health status
         run: |
