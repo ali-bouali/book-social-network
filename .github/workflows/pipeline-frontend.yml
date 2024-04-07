@@ -18,7 +18,7 @@ jobs:
       - name: Build & Push to DockerHub
         uses: docker/build-push-action@v5
         with:
-          context: book-network
+          context: book-network-ui
           file: docker/frontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest
