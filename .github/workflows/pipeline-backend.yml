@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - ci/pipeline
+    paths:
+      - book-network/**
+      - docker/backend/**
+      - 'docker-compose.yml'
 
 jobs:
   compile:
@@ -93,3 +97,28 @@ jobs:
             PROFILE: dev
             APP_VERSION: ${{ steps.extract_version.outputs.VERSION }}
   
+
+  deploy:
+    name: Deploy Backend
+    runs-on: self-hosted
+    needs: [build-image]
+    steps:
+      - name: Setup the private key
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
+
+      - name: Create deployment folder
+        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
+
+      - name: Copy docker-compose file
+        run: scp -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
+
+      - name: Set ENV variable and deploy
+        run: |
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          export EMAIL_HOST_NAME=${{ secrets.EMAIL_HOST_NAME }}
+          export EMAIL_USER_NAME=${{ secrets.EMAIL_USER_NAME }}
+          export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+          cd ci-cd
+          docker compose -f docker-compose.yml pull -q
+          docker compose -f docker-compose.yml up -d
+          EOF

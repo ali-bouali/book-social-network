@@ -1,0 +1,1 @@
+[![BSN Backend API Pipeline](https://github.com/ali-bouali/book-social-network/actions/workflows/pipeline-backend.yml/badge.svg?branch=ci%2Fpipeline)](https://github.com/ali-bouali/book-social-network/actions/workflows/pipeline-backend.yml)
