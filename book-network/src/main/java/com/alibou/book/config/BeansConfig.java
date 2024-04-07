@@ -53,7 +53,7 @@ public class BeansConfig {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8080", "http://192.168.0.227:8080"));
+        config.setAllowedOrigins(List.of("*"));
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.ORIGIN,
                 HttpHeaders.CONTENT_TYPE,
@@ -61,12 +61,7 @@ public class BeansConfig {
                 HttpHeaders.AUTHORIZATION
         ));
         config.setAllowedMethods(Arrays.asList(
-                "GET",
-                "POST",
-                "DELETE",
-                "PUT",
-                "PATCH",
-                "OPTIONS"
+                "*"
         ));
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
