@@ -72,7 +72,9 @@ jobs:
     steps:
       - name: Extract project version
         id: extract-version
-        run: echo "::set-output name=PROJECT_VERSION::$(mvn -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)"
+        run: |
+          echo "::set-output name=PROJECT_VERSION::$(mvn -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)"
+          echo "Project version:: ${{ steps.extract-version.outputs.PROJECT_VERSION }}"
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -86,7 +88,7 @@ jobs:
           dockerfile: docker/backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn:${{ steps.extract-version.outputs.PROJECT_VERSION }}
-          args: |
+          build-args: |
             PROFILE: dev
             APP_VERSION: ${{ steps.extract-version.outputs.PROJECT_VERSION }}
   
