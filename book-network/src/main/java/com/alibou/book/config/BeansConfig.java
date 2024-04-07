@@ -19,6 +19,11 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.http.HttpHeaders.ACCEPT;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpHeaders.ORIGIN;
+
 @Configuration
 @RequiredArgsConstructor
 public class BeansConfig {
@@ -55,10 +60,10 @@ public class BeansConfig {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8080", "http://192.168.0.227:8080"));
         config.setAllowedHeaders(Arrays.asList(
-                HttpHeaders.ORIGIN,
-                HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT,
-                HttpHeaders.AUTHORIZATION
+                ORIGIN,
+                CONTENT_TYPE,
+                ACCEPT,
+                AUTHORIZATION
         ));
         config.setAllowedMethods(Arrays.asList(
                 "GET",
