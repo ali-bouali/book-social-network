@@ -32,8 +32,7 @@ services:
     networks:
       - spring-demo
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
 
   bsn-ui:
     container_name: bsn-ui
@@ -43,8 +42,7 @@ services:
     networks:
       - spring-demo
     depends_on:
-      bsn-api:
-        condition: service_healthy
+      - bsn-api
 networks:
   spring-demo:
     driver: bridge

@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - ci/pipeline
+    paths:
+      - book-network-ui/**
+      - docker/frontend/**
+      - 'docker-compose.yml'
 jobs:
   build-image:
     name: Build FE Docker image
