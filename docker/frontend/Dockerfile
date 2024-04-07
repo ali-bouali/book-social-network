@@ -16,4 +16,5 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build-stage /app/dist/book-network-ui /usr/share/nginx/html
 
+
 EXPOSE 80
