@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.alibou</groupId>
 	<artifactId>book-network</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>book-network-api</name>
 	<description>Spring Boot project for book social network</description>
 	<properties>
