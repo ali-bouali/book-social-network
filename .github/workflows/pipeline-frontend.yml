@@ -14,6 +14,10 @@ jobs:
     name: Build FE Docker image
     runs-on: self-hosted
     steps:
+      - name: Extract project version
+        id: extract_version
+        run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -27,7 +31,7 @@ jobs:
           file: docker/frontend/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest, ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:${{ steps.extract_version.outputs.VERSION }}
 
   deploy:
     name: Deploy Frontend
@@ -47,6 +51,7 @@ jobs:
         run: |
           ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
           cd ci-cd
+          sed -i "s/\${UI_VERSION}/${{ steps.extract_version.outputs.VERSION }}/g" docker-compose.yml
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
           EOF
