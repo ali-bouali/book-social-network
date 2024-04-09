@@ -42,6 +42,6 @@ application:
     origins: http://192.168.0.227:8088/,http://localhost:8088/,http://localhost:4200,http://192.168.0.227:8080
   file:
     uploads:
-      photos-output-path: ./uploads
+      photos-output-path: ./app/uploads
 server:
   port: 8088
