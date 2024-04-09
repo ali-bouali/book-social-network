@@ -22,7 +22,7 @@ services:
       - 1025:1025
   bsn-api:
     container_name: bsn-api
-    image: alibouali/bsn-api:${API_VERSION}
+    image: alibouali/bsn-api:1.0.6
     environment:
       EMAIL_HOST_NAME: ${EMAIL_HOST_NAME}
       EMAIL_USER_NAME: ${EMAIL_USER_NAME}
@@ -36,7 +36,7 @@ services:
 
   bsn-ui:
     container_name: bsn-ui
-    image: alibouali/bsn-ui:${UI_VERSION}
+    image: alibouali/bsn-ui:1.0.1
     ports:
       - 8080:80
     networks:
