@@ -110,8 +110,8 @@ jobs:
     runs-on: self-hosted
     needs: [build-image]
     steps:
-      - name: Setup the private key
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
+#      - name: Setup the private key
+#        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
 
       - name: Create deployment folder
         run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
