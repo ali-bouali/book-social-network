@@ -25,7 +25,7 @@ import {ApiModule} from './services/api.module';
     FormsModule,
     HttpClientModule,
     CodeInputModule,
-    ApiModule.forRoot({rootUrl: 'http://bsn-api:8088/api/v1'})
+    ApiModule.forRoot({rootUrl: 'http://localhost:8088/api/v1'})
   ],
   providers: [
     HttpClient,
