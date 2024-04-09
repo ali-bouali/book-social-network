@@ -21,6 +21,7 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
+          sudo apt-get install jq
           cd book-network-ui
           echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
 
