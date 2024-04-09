@@ -22,7 +22,7 @@ services:
       - 1025:1025
   bsn-api:
     container_name: bsn-api
-    image: alibouali/bsn-api:1.0.9
+    image: alibouali/bsn-api:1.0.10
     environment:
       EMAIL_HOST_NAME: ${EMAIL_HOST_NAME}
       EMAIL_USER_NAME: ${EMAIL_USER_NAME}

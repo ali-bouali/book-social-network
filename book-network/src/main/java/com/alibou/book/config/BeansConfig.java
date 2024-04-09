@@ -31,7 +31,7 @@ public class BeansConfig {
 
     private final UserDetailsService userDetailsService;
 
-    @Value("${application.cors.allowed-origins:*}")
+    @Value("${application.cors.origins:*}")
     private List<String> allowedOrigin;
 
     @Bean
