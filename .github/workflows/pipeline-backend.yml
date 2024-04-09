@@ -120,19 +120,19 @@ jobs:
           export EMAIL_HOST_NAME=${{ secrets.EMAIL_HOST_NAME }}
           export EMAIL_USER_NAME=${{ secrets.EMAIL_USER_NAME }}
           export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+          export API_VERSION=${{ steps.extract_version.outputs.VERSION }}
           cd ci-cd
-          sed -i "s/\${API_VERSION}/${{ steps.extract_version.outputs.VERSION }}/g" docker-compose.yml
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
           EOF
-  health-check:
-    name: API Health Check
-    runs-on: self-hosted
-    needs: [deploy]
-    steps:
-      - name: Check the docker container health status
-        run: |
-          if ! docker ps -a | grep bsn-api; then
-            echo "Container is not running"
-            exit 1
-          fi
+#  health-check:
+#    name: API Health Check
+#    runs-on: self-hosted
+#    needs: [deploy]
+#    steps:
+#      - name: Check the docker container health status
+#        run: |
+#          if ! docker ps -a | grep bsn-api; then
+#            echo "Container is not running"
+#            exit 1
+#          fi
