@@ -41,7 +41,8 @@ export class ManageBookComponent implements OnInit {
            isbn: book.isbn as string,
            synopsis: book.synopsis as string,
            shareable: book.shareable
-         }
+         };
+         this.selectedPicture='data:image/jpg;base64,' + book.cover;
         }
       });
     }
