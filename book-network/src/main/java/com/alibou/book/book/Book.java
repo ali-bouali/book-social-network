@@ -4,6 +4,7 @@ import com.alibou.book.common.BaseEntity;
 import com.alibou.book.feedback.Feedback;
 import com.alibou.book.history.BookTransactionHistory;
 import com.alibou.book.user.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,6 +29,7 @@ public class Book extends BaseEntity {
     private String title;
     private String authorName;
     private String isbn;
+    @Column(columnDefinition="TEXT")
     private String synopsis;
     private String bookCover;
     private boolean archived;
