@@ -33,6 +33,12 @@ Book Social Network is a full-stack application that enables users to manage the
 #### Spring security diagram
 ![Security diagram](screenshots/security.png)
 
+#### Backend pipeline
+![Security diagram](screenshots/be-pipeline.png)
+
+#### Backend pipeline
+![Security diagram](screenshots/fe-pipeline.png)
+
 ## Technologies Used
 
 ### Backend (book-network)
@@ -44,6 +50,8 @@ Book Social Network is a full-stack application that enables users to manage the
 - JSR-303 and Spring Validation
 - OpenAPI and Swagger UI Documentation
 - Docker
+- GitHub Actions
+- Keycloak
 
 ### Frontend (book-network-ui)
 
@@ -71,6 +79,7 @@ By following this project, students will learn:
 - Documenting APIs using OpenAPI and Swagger UI
 - Implementing business requirements and handling business exceptions
 - Dockerizing the infrastructure
+- CI/CD pipeline & deployment
 
 ## License
 
