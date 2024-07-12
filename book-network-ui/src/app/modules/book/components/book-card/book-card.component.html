@@ -21,14 +21,14 @@
       </span>
     </div>
     <div class="d-flex gap-2" *ngIf="!manage">
-      <i (click)="onShowDetails()" class="fas fa-circle-info text-primary"></i>
-      <i (click)="onBorrow()" class="fas fa-list-check text-primary"></i>
-      <i (click)="onAddToWaitingList()" class="fas fa-heart text-danger"></i>
+      <i (click)="onShowDetails()" class="cursor-pointer fas fa-circle-info text-primary"></i>
+      <i (click)="onBorrow()" class="cursor-pointer fas fa-list-check text-primary"></i>
+      <i (click)="onAddToWaitingList()" class="cursor-pointer fas fa-heart text-danger"></i>
     </div>
     <div class="d-flex gap-2" *ngIf="manage">
-      <i (click)="onEdit()" class="fas fa-edit text-success"></i>
-      <i (click)="onShare()" class="fas fa-share-nodes text-primary"></i>
-      <i (click)="onArchive()" class="fas fa-archive text-danger"></i>
+      <i (click)="onEdit()" class="cursor-pointer fas fa-edit text-success"></i>
+      <i (click)="onShare()" class="cursor-pointer fas fa-share-nodes text-primary"></i>
+      <i (click)="onArchive()" class="cursor-pointer fas fa-archive text-danger"></i>
     </div>
   </div>
 </div>

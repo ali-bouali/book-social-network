@@ -28,10 +28,13 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./keycloak/realm:/opt/keycloak/data/import
     networks:
       - spring-demo
     command:
       - "start-dev"
+      - "--import-realm"
 networks:
   spring-demo:
     driver: bridge

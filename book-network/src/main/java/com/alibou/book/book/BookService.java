@@ -5,9 +5,18 @@ import com.alibou.book.exception.OperationNotPermittedException;
 import com.alibou.book.file.FileStorageService;
 import com.alibou.book.history.BookTransactionHistory;
 import com.alibou.book.history.BookTransactionHistoryRepository;
+import com.alibou.book.notification.Notification;
+import com.alibou.book.notification.NotificationService;
+import com.alibou.book.notification.NotificationStatus;
 import com.alibou.book.user.User;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +31,9 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.alibou.book.book.BookSpecification.withOwnerId;
+import static com.alibou.book.notification.NotificationStatus.BORROWED;
+import static com.alibou.book.notification.NotificationStatus.RETURNED;
+import static com.alibou.book.notification.NotificationStatus.RETURN_APPROVED;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +45,7 @@ public class BookService {
     private final BookMapper bookMapper;
     private final BookTransactionHistoryRepository transactionHistoryRepository;
     private final FileStorageService fileStorageService;
+    private final NotificationService notificationService;
 
     public Integer save(BookRequest request, Authentication connectedUser) {
         // User user = ((User) connectedUser.getPrincipal());
@@ -133,6 +146,15 @@ public class BookService {
                 .returned(false)
                 .returnApproved(false)
                 .build();
+
+        notificationService.sendNotification(
+                book.getCreatedBy(),
+                Notification.builder()
+                        .status(BORROWED)
+                        .message("Your book has been borrowed")
+                        .bookTitle(book.getTitle())
+                        .build()
+        );
         return transactionHistoryRepository.save(bookTransactionHistory).getId();
 
     }
@@ -152,7 +174,16 @@ public class BookService {
                 .orElseThrow(() -> new OperationNotPermittedException("You did not borrow this book"));
 
         bookTransactionHistory.setReturned(true);
-        return transactionHistoryRepository.save(bookTransactionHistory).getId();
+        var saved = transactionHistoryRepository.save(bookTransactionHistory);
+        notificationService.sendNotification(
+                book.getCreatedBy(),
+                Notification.builder()
+                        .status(RETURNED)
+                        .message("Your book has been returned")
+                        .bookTitle(book.getTitle())
+                        .build()
+        );
+        return saved.getId();
     }
 
     public Integer approveReturnBorrowedBook(Integer bookId, Authentication connectedUser) {
@@ -170,7 +201,16 @@ public class BookService {
                 .orElseThrow(() -> new OperationNotPermittedException("The book is not returned yet. You cannot approve its return"));
 
         bookTransactionHistory.setReturnApproved(true);
-        return transactionHistoryRepository.save(bookTransactionHistory).getId();
+        var saved = transactionHistoryRepository.save(bookTransactionHistory);
+        notificationService.sendNotification(
+                bookTransactionHistory.getCreatedBy(),
+                Notification.builder()
+                        .status(RETURN_APPROVED)
+                        .message("Your book return has been approved")
+                        .bookTitle(book.getTitle())
+                        .build()
+        );
+        return saved.getId();
     }
 
     public void uploadBookCoverPicture(MultipartFile file, Authentication connectedUser, Integer bookId) {

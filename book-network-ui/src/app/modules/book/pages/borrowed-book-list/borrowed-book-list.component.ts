@@ -5,6 +5,7 @@ import {BorrowedBookResponse} from '../../../../services/models/borrowed-book-re
 import {BookResponse} from '../../../../services/models/book-response';
 import {FeedbackRequest} from '../../../../services/models/feedback-request';
 import {FeedbackService} from '../../../../services/services/feedback.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-borrowed-book-list',
@@ -20,7 +21,8 @@ export class BorrowedBookListComponent implements OnInit {
   feedbackRequest: FeedbackRequest = {bookId: 0, comment: '', note: 0};
   constructor(
     private bookService: BookService,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    private toastService: ToastrService
   ) {
   }
   ngOnInit(): void {
@@ -83,6 +85,7 @@ export class BorrowedBookListComponent implements OnInit {
         if (withFeedback) {
           this.giveFeedback();
         }
+        this.toastService.success('Book has been returned and the owner is notified', 'Success');
         this.selectedBook = undefined;
         this.findAllBorrowedBooks();
       }

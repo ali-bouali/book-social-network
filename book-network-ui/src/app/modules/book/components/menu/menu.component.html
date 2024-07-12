@@ -33,10 +33,24 @@
         </li>
       </ul>
       <form class="d-flex gap-2 align-items-center" role="search">
+        <div class="dropdown cursor-pointer" (click)="unreadNotificationsCount = 0">
+          <i class="fas fa-bell position-relative h4" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle" *ngIf="unreadNotificationsCount > 0">
+              <span class="visually-hidden">New alerts</span>
+            </span>
+          </i>
+          <ul class="dropdown-menu">
+            <li *ngFor="let notification of notifications">
+              <span class="dropdown-item cursor-pointer border-bottom">
+                <i class="fas fa-bell"></i>&nbsp; {{notification.bookTitle}} : {{notification.message}}
+              </span>
+            </li>
+          </ul>
+        </div>
         <input class="form-control" type="search" placeholder="Find a book" aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
         <span>Welcome</span>
-        <span class="text-capitalize fw-bold">alibou</span>
+        <span class="text-capitalize fw-bold">{{username}}</span>
         <button class="btn btn-link" type="submit" (click)="logout()"><i class="fas fa-door-open"></i></button>
       </form>
     </div>

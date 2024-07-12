@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+@import 'ngx-toastr/toastr';
 
 .login-container {
   width: 800px !important;
