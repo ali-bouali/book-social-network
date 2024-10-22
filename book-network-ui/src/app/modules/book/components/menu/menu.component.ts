@@ -23,6 +23,12 @@ export class MenuComponent implements OnInit {
           link.classList.add('active');
         });
       });
+      
+      const profileName = document.getElementById('profileName');
+      if (profileName) {
+        profileName.innerText = this.keycloakService.profile?.firstName || '';
+      }
+
     }
 
   async logout() {
